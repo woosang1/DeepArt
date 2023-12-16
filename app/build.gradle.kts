@@ -49,6 +49,10 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
+    // picasso
+    implementation ("com.squareup.picasso:picasso:2.71828")
+    //gif
+    implementation ("com.github.Cutta:GifView:1.4")
     // base
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("nb_base-1.0.7.aar"))))
 }
