@@ -1,4 +1,4 @@
-package com.example.deepart.features.main
+package com.example.deepart.features.main.container
 
 import android.view.LayoutInflater
 import android.widget.LinearLayout
@@ -11,6 +11,8 @@ import com.example.deepart.databinding.ActivityMainBinding
 import com.squareup.picasso.Picasso
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.deepart.features.main.MainViewModel
+import com.example.deepart.features.main.container.styleImage.StyleImageAdapter
 import com.example.deepart.features.main.common.MainSideEffect
 import com.example.deepart.features.main.common.MainState
 import com.example.deepart.features.main.common.StyleImage

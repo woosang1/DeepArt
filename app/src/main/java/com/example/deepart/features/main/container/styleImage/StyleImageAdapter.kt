@@ -1,4 +1,4 @@
-package com.example.deepart.features.main
+package com.example.deepart.features.main.container.styleImage
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

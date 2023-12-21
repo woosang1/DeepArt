@@ -1,4 +1,4 @@
-package com.example.deepart.features.main
+package com.example.deepart.features.main.container.styleImage
 
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.deepart.R
