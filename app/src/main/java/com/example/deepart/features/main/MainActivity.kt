@@ -1,9 +1,9 @@
-package com.example.deepart
+package com.example.deepart.features.main
 
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.core.graphics.drawable.toBitmap
+import com.example.deepart.R
 import com.example.deepart.core.base.BaseActivity
 import com.example.deepart.core.image.BlurTransformation
 import com.example.deepart.core.image.convertUri
@@ -13,11 +13,7 @@ import com.squareup.picasso.Picasso
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun initBinding(layoutInflater: LayoutInflater): ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setBgImage()
-    }
+    override fun onInitBinding() { setBgImage() }
 
     private fun setBgImage(){
         // drawable 타입을 bitmap으로 변경

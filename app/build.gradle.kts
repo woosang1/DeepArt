@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -49,10 +50,28 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
+    // lifeCycle
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.5.1")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
+    implementation("androidx.lifecycle:lifecycle-common-java8:2.5.1")
+
+    // hilt
+    implementation("com.google.dagger:hilt-android:2.46")
+    kapt("com.google.dagger:hilt-compiler:2.46")
+    kapt("com.google.dagger:hilt-android-compiler:2.46")
+    testImplementation("com.google.dagger:hilt-android-testing:2.46")
+    kaptTest("com.google.dagger:hilt-android-compiler:2.46")
+
     // picasso
     implementation ("com.squareup.picasso:picasso:2.71828")
     //gif
     implementation ("com.github.Cutta:GifView:1.4")
+
+    // oribit
+    implementation("org.orbit-mvi:orbit-core:6.0.0")
+    implementation("org.orbit-mvi:orbit-viewmodel:6.0.0")
+
     // base
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("nb_base-1.0.7.aar"))))
 }

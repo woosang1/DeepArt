@@ -7,7 +7,6 @@
 
     </data>
 
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -71,7 +70,7 @@
 
             <!--  썸네일   -->
             <ImageView
-                android:id="@+id/previewIV"
+                android:id="@+id/previewImage"
                 android:layout_width="match_parent"
                 android:layout_height="525dp"
                 android:layout_marginTop="10dp"
