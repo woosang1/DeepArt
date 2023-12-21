@@ -56,21 +56,19 @@
                     android:scaleType="centerCrop" />
 
                 <ImageView
-                    android:id="@+id/option_id"
+                    android:id="@+id/optionId"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_gravity="center"
                     android:layout_marginEnd="10dp"
                     android:background="#00ff0000"
-                    android:onClick="option"
                     android:scaleType="centerCrop"
                     android:src="@drawable/option_circle4" />
             </LinearLayout>
 
             <!--  썸네일   -->
             <ImageView
-                android:id="@+id/previewImage"
+                android:id="@+id/thumbnail"
                 android:layout_width="match_parent"
                 android:layout_height="525dp"
                 android:layout_marginTop="10dp"
@@ -78,15 +76,12 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/background5" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="40dp" />
-
             <!--  필터 사진   -->
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/styleListRC"
+                android:id="@+id/styleRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="150dp" />
+                android:layout_height="150dp"
+                android:layout_marginTop="40dp"/>
 
             <!--  하단 메뉴    -->
             <LinearLayout
@@ -99,7 +94,7 @@
                 android:weightSum="5">
 
                 <ImageButton
-                    android:id="@+id/camera_id"
+                    android:id="@+id/cameraBtn"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_marginStart="10dp"
@@ -109,7 +104,7 @@
                     android:src="@drawable/camera_circle2" />
 
                 <ImageButton
-                    android:id="@+id/gall"
+                    android:id="@+id/galleryBtn"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_marginStart="30dp"
@@ -119,7 +114,7 @@
                     android:src="@drawable/gall_circle2" />
 
                 <ImageButton
-                    android:id="@+id/edit_id"
+                    android:id="@+id/editBtn"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_marginStart="30dp"
@@ -129,7 +124,7 @@
                     android:src="@drawable/edit_circle2" />
 
                 <ImageButton
-                    android:id="@+id/save_id"
+                    android:id="@+id/saveBtn"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_marginStart="30dp"
@@ -140,7 +135,7 @@
 
 
                 <ImageButton
-                    android:id="@+id/db_load_id"
+                    android:id="@+id/communityBtn"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="right"
