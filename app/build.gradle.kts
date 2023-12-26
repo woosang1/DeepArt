@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
+//    id("com.google.gms.google-services")
 }
 
 android {
@@ -17,6 +18,10 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    aaptOptions {
+        noCompress("tflite")
     }
 
     buildTypes {
@@ -74,4 +79,9 @@ dependencies {
 
     // base
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("nb_base-1.0.7.aar"))))
+
+    // tensorflow
+//
+
+    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 }

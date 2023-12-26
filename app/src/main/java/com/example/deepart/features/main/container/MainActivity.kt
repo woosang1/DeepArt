@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,7 +12,6 @@ import android.widget.LinearLayout
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
 import androidx.core.graphics.drawable.toBitmap
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.deepart.R
@@ -34,8 +32,7 @@ import com.example.deepart.utils.showToast
 import com.nolbal.nolbal.core.ui.decorator.itemDecoration.ItemHorizontalDecorator
 import com.squareup.picasso.Picasso
 import org.orbitmvi.orbit.viewmodel.observe
-import java.io.File
-import java.io.IOException
+//import org.tensorflow.contrib.android.TensorFlowInferenceInterface
 
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
@@ -44,6 +41,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         /** Camera **/
         private const val CAMERA_PERMISSION_REQUEST_CODE = 1001
         const val REQUEST_IMAGE_CAPTURE = 1
+        const val IMAGE_LOW_BOUND_VALUE = 1280
 
         /** Galley **/
         const val REQUEST_PICK_IMAGE = 2
@@ -75,26 +73,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 Log.i("logger", "state.mainUiState.bitmap : ${state.mainUiState.bitmap}")
                 val bitmap = state.mainUiState.bitmap
 //                setUpPreviewImageData()
-                setBgImage(bitmap)
+                bitmap?.let { setBgImage(it) }
                 setStyleImage()
                 binding.thumbnail.setImageBitmap(bitmap)
             }
         }
     }
-
-//    fun setUpPreviewImageData(currentBitmap: Bitmap) {
-//        var currentResizedResolution :  = ImageUtils.getResizedResolution(
-//            currentBitmap.height, currentBitmap.width,
-//            MainActivity.IMAGE_LOW_BOUND_VALUE
-//        )
-//        var currentResizedBitmap = ImageUtils.getResizedBitmap(
-//            currentBitmap, currentResizedResolution.get(0), currentResizedResolution.get(1)
-//        )
-//        currentResizedResolution.get(1) = MainActivity.IMAGE_LOW_BOUND_VALUE
-//        currentResizedResolution.get(0) = currentResizedResolution.get(1)
-//        currentResizedBitmap = ImageUtils.cropBitmap(currentResizedBitmap)
-//        val currentResizedBitmapCopy = Bitmap.createBitmap(currentResizedBitmap)
-//    }
 
     private fun handleSideEffect(sideEffect: MainSideEffect) {
         when (sideEffect) {
@@ -116,11 +100,99 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             is MainSideEffect.ShowOptionPopup -> {
 
             }
+            is MainSideEffect.TransImage -> {
+//                val result = setUpPreviewImageData(sideEffect.style)
+//                stylishImage(sideEffect.style)
+//                binding.thumbnail.setImageBitmap(result)
+            }
             is MainSideEffect.ShowToast -> {
                 showToast(sideEffect.message)
             }
         }
     }
+
+//    private fun setUpPreviewImageData(currentBitmap: Bitmap): Bitmap {
+//        val currentResizedResolution: IntArray = ImageUtils.getResizedResolution(
+//            currentBitmap.height, currentBitmap.width,
+//            MainActivity.IMAGE_LOW_BOUND_VALUE
+//        )
+//
+//        var currentResizedBitmap = ImageUtils.getResizedBitmap(
+//            currentBitmap, currentResizedResolution[0], currentResizedResolution[1]
+//        )
+//
+//        currentResizedResolution[1] = MainActivity.IMAGE_LOW_BOUND_VALUE
+//        currentResizedResolution[0] = currentResizedResolution[1]
+//
+//        currentResizedBitmap = ImageUtils.cropBitmap(currentResizedBitmap)
+//
+//        return currentResizedBitmap.copy(currentResizedBitmap.config, true)
+//    }
+
+    // TODO: org.tensorflow.contrib.android.TensorFlowInferenceInterface import 안되는 이슈 발생
+//    fun stylishImage(currentBitmap: Bitmap) {
+////        computing = true
+//        val styleVals = FloatArray(26)
+////        if (mixMode) {
+////            for (i in 0 until MainActivity.NUM_STYLES) styleVals[i] = styleAlpha.get(i).toFloat() / learning_score //100  학습량!!! 원본 : 100   수가 크면 클수록 학습이 덜된다.!!
+////        } else {
+////            styleVals[currentStyle] = styleAlpha.get(currentStyle).toFloat() / learning_score //100 학습량!!! 원본 : 100   수가 크면 클수록 학습이 덜된다.!!
+////        }
+//
+//        val currentResizedResolution: IntArray = ImageUtils.getResizedResolution(
+//            currentBitmap.height, currentBitmap.width,
+//            MainActivity.IMAGE_LOW_BOUND_VALUE
+//        )
+//
+//        var currentResizedBitmap = ImageUtils.getResizedBitmap(
+//            currentBitmap, currentResizedResolution[0], currentResizedResolution[1]
+//        )
+//
+//        currentResizedResolution[1] = MainActivity.IMAGE_LOW_BOUND_VALUE
+//        currentResizedResolution[0] = currentResizedResolution[1]
+//
+//        currentResizedBitmap = ImageUtils.cropBitmap(currentResizedBitmap)
+//
+////        return currentResizedBitmap.copy(currentResizedBitmap.config, true)
+//
+//
+//        val currentResizedBitmapCopy = Bitmap.createBitmap(currentResizedBitmap)
+//        val imageData = IntArray(currentResizedResolution.get(0) * currentResizedResolution.get(1))
+//        val imageDataFloat = FloatArray(currentResizedResolution.get(0) * currentResizedResolution.get(1) * 3)
+//        currentResizedBitmapCopy.getPixels(
+//            imageData, 0, currentResizedBitmapCopy.getWidth(),
+//            0, 0, currentResizedBitmapCopy.getWidth(), currentResizedBitmapCopy.getHeight()
+//        )
+//        for (i in imageData.indices) {
+//            val `val`: Int = imageData.get(i)
+//            imageDataFloat.get(i * 3) = (`val` shr 16 and 0xff) / 255.0f
+//            imageDataFloat.get(i * 3 + 1) = (`val` shr 8 and 0xff) / 255.0f
+//            imageDataFloat.get(i * 3 + 2) = (`val` and 0xff) / 255.0f
+//        }
+//        val inferenceInterface: TensorFlowInferenceInterface
+//        inferenceInterface.feed(
+//            MainActivity.INPUT_NODE, imageDataFloat, 1,
+//            currentResizedBitmapCopy.getWidth(), currentResizedBitmapCopy.getHeight(), 3
+//        )
+//        inferenceInterface.feed(MainActivity.STYLE_NODE, styleVals, MainActivity.NUM_STYLES)
+//        inferenceInterface.run(arrayOf<String>(MainActivity.OUTPUT_NODE), false)
+//        inferenceInterface.fetch(MainActivity.OUTPUT_NODE, imageDataFloat)
+//        for (i in imageData.indices) {
+//            imageData.get(i) = (-0x1000000
+//                    or ((imageDataFloat.get(i * 3) * 255).toInt() shl 16)
+//                    or ((imageDataFloat.get(i * 3 + 1) * 255).toInt() shl 8)
+//                    or (imageDataFloat.get(i * 3 + 2) * 255).toInt())
+//        }
+//        currentResizedBitmapCopy.setPixels(
+//            imageData, 0, currentResizedBitmapCopy.getWidth(), 0, 0,
+//            currentResizedBitmapCopy.getWidth(), currentResizedBitmapCopy.getHeight()
+//        )
+//        runOnUiThread {
+//            if (toggle) //toggleUI(1);
+//                previewIV.setImageBitmap(currentResizedBitmapCopy)
+//        }
+//        computing = false
+//    }
 
     private fun setBgImage(bitmap: Bitmap) {
         bitmap.let { it ->
@@ -144,7 +216,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     private fun setStyleRecyclerView(){
         binding.styleRecyclerView.apply {
-            adapter = StyleImageAdapter()
+            adapter = StyleImageAdapter(mainViewModel)
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             while (itemDecorationCount > 0) { removeItemDecorationAt(0) }
             addItemDecoration(
