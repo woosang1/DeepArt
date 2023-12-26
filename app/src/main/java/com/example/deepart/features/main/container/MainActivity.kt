@@ -45,7 +45,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         private const val CAMERA_PERMISSION_REQUEST_CODE = 1001
         const val REQUEST_IMAGE_CAPTURE = 1
 
-        const val IMAGE_LOW_BOUND_VALUE = 1280
+        /** Galley **/
+        const val REQUEST_PICK_IMAGE = 2
 
     }
 
@@ -57,7 +58,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         setStyleRecyclerView()
         setStyleImage()
         setClickListener()
-        setBgImage()
     }
 
     override fun setObserver() {
@@ -68,15 +68,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     private fun render(state: MainState) {
         when(state.mainUiState){
             is MainUiState.Init -> {
-
+                getDrawable(R.drawable.background5)?.toBitmap()?.let { setBgImage(it) }
             }
             is MainUiState.Result -> {
                 Log.i("logger", "is MainUiState.Result -> ")
                 Log.i("logger", "state.mainUiState.bitmap : ${state.mainUiState.bitmap}")
-//                start_img = currentBitmap
+                val bitmap = state.mainUiState.bitmap
 //                setUpPreviewImageData()
+                setBgImage(bitmap)
                 setStyleImage()
-                binding.thumbnail.setImageBitmap(state.mainUiState.bitmap)
+                binding.thumbnail.setImageBitmap(bitmap)
             }
         }
     }
@@ -101,7 +102,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 checkCameraPermission()
             }
             is MainSideEffect.OpenGallery -> {
-
+                openGallery()
             }
             is MainSideEffect.EditImage -> {
 
@@ -121,9 +122,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         }
     }
 
-    private fun setBgImage() {
-        val imageBitmap = getDrawable(R.drawable.background5)?.toBitmap()
-        imageBitmap?.let { it ->
+    private fun setBgImage(bitmap: Bitmap) {
+        bitmap.let { it ->
             Picasso.get()
                 .load(it.convertUri(this))
                 .resize(100, 0)
@@ -183,6 +183,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         }
     }
 
+    private fun openGallery() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(intent, REQUEST_PICK_IMAGE)
+    }
+
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
@@ -211,15 +216,32 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         Log.i("logger", "onActivityResult")
         Log.i("logger", "requestCode : ${requestCode}")
         Log.i("logger", "resultCode : ${resultCode}")
-        // 사진 촬영 성공 후 되돌아올 시,
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
-            // 이미지를 Bitmap으로 변환
-            val bitmap = data?.extras?.get("data") as Bitmap?
-            // Bitmap을 사용하여 필요한 작업 수행
-            if (bitmap != null) {
-                val rotate = ImageUtils.getRotateMatrix(mainViewModel.currentImagePath)
-                val currentBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, rotate, true)
-                mainViewModel.changeResultState(currentBitmap)
+
+        if (resultCode == Activity.RESULT_OK){
+            when(requestCode){
+                // 카메라 촬영 성공 시,
+                REQUEST_IMAGE_CAPTURE -> {
+                    // 이미지를 Bitmap으로 변환
+                    val bitmap = data?.extras?.get("data") as Bitmap?
+                    // Bitmap을 사용하여 필요한 작업 수행
+                    if (bitmap != null) {
+                        val rotate = ImageUtils.getRotateMatrix(mainViewModel.currentImagePath)
+                        val currentBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, rotate, true)
+                        mainViewModel.changeResultState(currentBitmap)
+                    }
+                }
+                // 갤러리 선택 성공 시,
+                REQUEST_PICK_IMAGE -> {
+                    // 이미지를 Bitmap으로 변환
+                    val selectedImageUri = data?.data
+                    val bitmap = selectedImageUri?.let { uri -> MediaStore.Images.Media.getBitmap(contentResolver, uri) }
+                    // Bitmap을 사용하여 필요한 작업 수행
+                    if (bitmap != null) {
+                        val rotate = ImageUtils.getRotateMatrix(mainViewModel.currentImagePath)
+                        val currentBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, rotate, true)
+                        mainViewModel.changeResultState(currentBitmap)
+                    }
+                }
             }
         }
     }
