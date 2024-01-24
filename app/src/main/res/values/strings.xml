@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">DeepArt</string>
+    <string name="from_gallery">From Gallery</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="reset_style">Reset Style</string>
+
+    <string name="label_brush">그리기</string>
+    <string name="label_emoji">표정</string>
+    <string name="label_sticker">스티커</string>
+    <string name="label_eraser">지우개</string>
+    <string name="label_text">텍스트</string>
+    <string name="label_filter">필터</string>
+    <string name="label_adjust">적용</string>
+    <string name="developed_by_aravind_chowdary">Developed by Aravind Chowdary</string>
 </resources>

@@ -5,10 +5,14 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -32,8 +36,7 @@ import com.example.deepart.utils.showToast
 import com.nolbal.nolbal.core.ui.decorator.itemDecoration.ItemHorizontalDecorator
 import com.squareup.picasso.Picasso
 import org.orbitmvi.orbit.viewmodel.observe
-//import org.tensorflow.contrib.android.TensorFlowInferenceInterface
-
+import java.io.ByteArrayOutputStream
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
@@ -89,7 +92,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 openGallery()
             }
             is MainSideEffect.EditImage -> {
-
+                startEditActivity()
             }
             is MainSideEffect.SaveImage -> {
 
@@ -317,4 +320,19 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             }
         }
     }
+
+    private fun startEditActivity() {
+        val selectedStyle = (binding.styleRecyclerView.adapter as? StyleImageAdapter)?.model?.find { it.isSelected }
+        if (selectedStyle != null){
+            // TODO: 썸네일 bitMap을 사진 편집 액티비티로 이동하기.
+//            val intent = Intent(this, EditImageActivity::class.java)
+//            val thumbnailDrawable: Drawable = binding.thumbnail.drawable
+//            intent.putExtra("home_to_edit_image3", thumbnailDrawable)
+//            startActivity(intent)
+        }
+        else{
+            mainViewModel.postAction(MainSideEffect.ShowToast("스타일의 이미지를 선택해주세요."))
+        }
+    }
+
 }

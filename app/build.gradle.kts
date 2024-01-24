@@ -77,11 +77,16 @@ dependencies {
     implementation("org.orbit-mvi:orbit-core:6.0.0")
     implementation("org.orbit-mvi:orbit-viewmodel:6.0.0")
 
+    // photoEditor
+//    implementation("com.burhanrashid52:photoeditor:0.4.0")
+//    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("android-image-cropper-2.8.0.aar"))))
+//    implementation("com.theartofdev.edmodo:android-image-cropper:2.8.0")
+//    api("com.theartofdev.edmodo:android-image-cropper:2.8.0")
+
     // base
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("nb_base-1.0.7.aar"))))
+    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
     // tensorflow
-//
 
-    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 }
