@@ -1,6 +1,4 @@
-/*
- * Created by Lee Oh Hyoung on 2020/03/20 .. 
- */
+
 package com.example.deepart.utils
 
 import android.content.Context
