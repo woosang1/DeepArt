@@ -1,10 +1,13 @@
-# DeepArt
+<h1 align="center">DeepArt</h1>
+
+<p>
+🗡️ TensorFlowLite를 이용한 두가지 사진을 합성하는 앱
+</p>
 
 <img width="360" alt="스크린샷 2023-12-16 오후 1 00 58" src="https://github.com/woosang1/Deep_Art/assets/45825518/ef1ea551-724a-48b5-965c-f2a33fc629f8">
 
 ## 사진합성 앱
-- TensorFlowLite를 이용한 두가지 사진을 합성하는 앱
-- [기능]
+[기능]
 - 사진 > 합성
 - 사진 > 편집
   > 펜 그리기 및 색상 선택 / 지우개 / 필터 / 스티커(이모지 & 사진)
